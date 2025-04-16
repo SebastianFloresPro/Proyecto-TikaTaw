@@ -1,0 +1,282 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TikaPaw</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #ffffff;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo-marca {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 24px;
+    }
+
+    .logo-marca img {
+      height: 35px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .iconos {
+      display: flex;
+      gap: 20px;
+      font-size: 18px;
+    }
+
+    .seccion-heroica {
+      background-color: #ebab9b;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .seccion-heroica img {
+      max-width: 300px;
+    }
+
+    .texto-heroico {
+      font-size: 16px;
+      max-width: 600px;
+      margin: 20px auto;
+      line-height: 1.5;
+    }
+
+    .boton-heroico {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .seccion-informativa {
+      background-color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .seccion-informativa h2 {
+      font-size: 20px;
+      font-weight: bold;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .barras-busqueda {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .barra-busqueda {
+      display: flex;
+      align-items: center;
+      background-color: #f1ecf4;
+      padding: 8px 12px;
+      border-radius: 30px;
+    }
+
+    .barra-busqueda input {
+      border: none;
+      background: transparent;
+      outline: none;
+      padding-left: 10px;
+    }
+
+    .barra-busqueda i {
+      color: #5f5f5f;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      padding: 20px;
+      color: #999;
+    }
+
+    .galeria-gatos {
+      background-color: #fff;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .galeria-gatos h2 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .contenedor-gatos {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .tarjeta-gato {
+      background-color: #fdf4ef;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 250px;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .tarjeta-gato:hover {
+      transform: translateY(-5px);
+    }
+
+    .tarjeta-gato img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .tarjeta-gato h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .tarjeta-gato p {
+      font-size: 14px;
+      color: #777;
+      margin: 8px 0 16px;
+    }
+
+    .boton-adoptar {
+      background-color: #eb7f5b;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .boton-adoptar:hover {
+      background-color: #d96a46;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo-marca">
+      <img src="img/Cats Grooming.png" alt="Logo">
+      TikaPaw
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Refugios</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="iconos">
+      <i class="fa-regular fa-user"></i>
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <i class="fa-regular fa-heart"></i>
+    </div>
+  </header>
+
+  <section class="seccion-heroica">
+    <img src="img/logo.png" alt="Gato central">
+    <div class="texto-heroico">
+      Cada patita tiene una historia esperando ser escrita. Dale una segunda oportunidad al amor, conoce a tu futura mascota.<br>
+      La felicidad comienza con un ladrido, un ronroneo… ¿Estás listo para recibirla?
+    </div>
+    <button class="boton-heroico">Mas información</button>
+  </section>
+
+  <section class="seccion-informativa">
+    <h2>Descubre los mejores centros de adopción y refugios de mascotas, donde cada vida espera una oportunidad</h2>
+    <div class="barras-busqueda">
+      <div class="barra-busqueda">
+        <i class="fa-solid fa-bars"></i>
+        <input type="text" placeholder="Busca un refugio, albergue...">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      <div class="barra-busqueda">
+        <i class="fa-solid fa-bars"></i>
+        <input type="text" placeholder="Adopta una mascota">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+    <p style="margin-top: 20px; font-size: 14px; color: #777;">
+      Info.
+    </p>
+  </section>
+
+  <!-- Sección de gatos destacados -->
+  <section class="galeria-gatos">
+    <h2>Gatitos en adopción</h2>
+    <div class="contenedor-gatos">
+      <div class="tarjeta-gato">
+        <img src="img/cat.jpeg" alt="Gato 1">
+        <h3>Michi</h3>
+        <p>2 años • Juguetón y cariñoso</p>
+        <button class="boton-adoptar">Adóptame</button>
+      </div>
+      <div class="tarjeta-gato">
+        <img src="img/cat.jpeg" alt="Gato 2">
+        <h3>Luna</h3>
+        <p>1 año • Tranquila y dulce</p>
+        <button class="boton-adoptar">Adóptame</button>
+      </div>
+      <div class="tarjeta-gato">
+        <img src="img/cat.jpeg" alt="Gato 3">
+        <h3>Tigre</h3>
+        <p>3 años • Independiente</p>
+        <button class="boton-adoptar">Adóptame</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 TikaPaw - Todos los derechos reservados
+  </footer>
+
+</body>
+</html>
