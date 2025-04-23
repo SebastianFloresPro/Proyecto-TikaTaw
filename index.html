@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TikaPaw</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -198,48 +199,62 @@
       background-color: #d96a46;
     }
     
+    @media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    height: auto;
+    gap: 15px;
+  }
+
+  .logo-marca {
+    font-size: 24px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .iconos {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .seccion-heroica img {
+    max-width: 90%;
+  }
+
+  .texto-heroico {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  .barras-busqueda {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .barra-busqueda {
+    width: 90%;
+  }
+
+  .contenedor-gatos {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tarjeta-gato {
+    max-width: 90%;
+  }
+}
   
-  @media (max-width: 768px) {
-    header {
-      flex-direction: column;
-      height: 60px;
-      padding: 30px 20px;
-      gap: 15px;
-      align-items: flex-start;
-    }
-
-    nav {
-      flex-direction: column;
-      gap: 14px;
-      align-items: flex-start;
-    }
-
-    .iconos {
-      justify-content: center;
-      width: 100%;
-    }
-
-    .seccion-heroica img {
-      max-width: 80%;
-    }
-
-    .barras-busqueda {
-      flex-direction: column;
-      gap: 35px;
-    }
-
-    .contenedor-gatos {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .tarjeta-gato {
-      max-width: 100%;
-    }
-    .logo-marca {
-    font-size: 60px;
-     } 
-  }   
 </style>
   
 </head>
