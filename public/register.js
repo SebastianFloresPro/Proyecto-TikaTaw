@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
   
-      if (!correo.includes("@") || !correo.includes(".")) {
+      // Validación del correo usando una expresión regular
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailRegex.test(correo)) {
         alert("Correo no válido.");
         return;
       }
@@ -25,14 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       // Si todo es válido, enviamos los datos
-      fetch("/register", {  // Asegúrate de que sea la misma ruta que en Express
+      fetch("/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nombre, correo, contraseña })
       })
       .then(res => res.json())
       .then(data => {
-        alert("¡Usuario registrado con éxito!");
+        if (data.message) {
+          alert(data.message);  // Muestra el mensaje que devuelve el backend
+        }
         form.reset();
       })
       .catch(err => {

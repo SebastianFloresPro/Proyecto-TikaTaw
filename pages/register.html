@@ -6,12 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/loginstyle.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script>
-    function registrarUsuario(event) {
-      event.preventDefault();
-      alert("¡Gracias por registrarte!");
-    }
-  </script>
 </head>
 <body>
 
@@ -44,15 +38,16 @@
       <div class="texto-heroico">CREAR CUENTA</div>
       <div class="breadcrumb">Home &gt; Register</div>
 
-      <form onsubmit="registrarUsuario(event)">
+      <!-- El formulario ahora usa el event listener de JavaScript -->
+      <form id="registerForm">
         <div class="form-group">
           <label for="nombre">Nombre:</label>
           <input type="text" id="nombre" name="nombre" required />
         </div>
       
         <div class="form-group">
-          <label for="email">Correo electrónico:</label>
-          <input type="email" id="email" name="email" required />
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" name="correo" required />
         </div>
       
         <div class="form-group">
@@ -73,5 +68,6 @@
     </div>
   </section>
 
+  <script src="register.js"></script> 
 </body>
 </html>
