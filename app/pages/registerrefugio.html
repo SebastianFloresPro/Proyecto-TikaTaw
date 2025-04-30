@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro Establecimiento - TikaPaw</title>
+  <link rel="stylesheet" href="/registerstyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-marca">
+          <a href="/inicio" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+            <img src="img/Cats Grooming.png" alt="Logo">
+            TikaPaw
+          </a>
+        </div>
+        <nav>
+          <a href="/inicio">Home</a>
+          <a href="/refugios">Refugios</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+        </nav>
+        <div class="iconos">
+          <a href="/login" title="Iniciar sesión"><i class="fa-regular fa-user"></i></a>
+          <a href="/busqueda" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></a>
+          <a href="/favoritos" title="Favoritos"><i class="fa-regular fa-heart"></i></a>
+        </div>
+      </header>
+    
+
+  <div class="fondo-register">Registro Establecimiento</div>
+
+  <div class="header-texto">
+    Ingresa los datos de tu refugio para comenzar a ser parte de TikaPaw.
+  </div>
+
+  <div class="contenedor-form">
+    <h4>Datos del Establecimiento</h4>
+
+    <div class="fila-doble">
+      <div>
+        <h6>Rubro del establecimiento</h6>
+        <input type="text" placeholder="Ej: Refugio, Veterinaria, etc.">
+      </div>
+      <div>
+        <h6>Nombre de contacto</h6>
+        <input type="text" placeholder="Nombre de la persona a cargo">
+      </div>
+    </div>
+
+    <h6>Nombre del establecimiento</h6>
+    <input type="text" placeholder="Nombre del refugio o centro">
+
+    <h6>Teléfono</h6>
+    <input type="text" placeholder="Número de contacto">
+
+    <h6>Correo electrónico</h6>
+    <input type="email" placeholder="ejemplo@correo.com">
+
+    <h6>Redes sociales</h6>
+    <input type="text" placeholder="@Instagram / Facebook / Web">
+
+    <h6>Descripción del establecimiento</h6>
+    <textarea rows="4" placeholder="Breve descripción del lugar"></textarea>
+
+    <h5>Foto logo (500x500)</h5>
+    <label class="archivo-input">
+      <i class="fa-solid fa-pencil"></i> Seleccionar archivo
+      <input type="file" accept="image/*">
+    </label>
+
+    <h5>Foto portada</h5>
+    <label class="archivo-input">
+      <i class="fa-solid fa-pencil"></i> Seleccionar archivo
+      <input type="file" accept="image/*">
+    </label>
+
+    <textarea rows="4" placeholder="Información adicional..."></textarea>
+
+    <button class="boton-enviar" onclick="document.getElementById('exito').style.display='block'">
+      Enviar
+    </button>
+    <div id="exito" class="mensaje-exito">¡Formulario enviado con éxito!</div>
+  </div>
+
+</body>
+</html>
