@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       // Si todo es válido, enviamos los datos
-      fetch("/api/registro", {
+      fetch("/register", {  // Asegúrate de que sea la misma ruta que en Express
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nombre, correo, contraseña })
