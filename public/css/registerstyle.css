@@ -1,0 +1,139 @@
+b* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    background-color: #f4f4f4;
+  }
+  
+  header {
+    background-color: #ffffff;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .logo-marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 24px;
+  }
+  
+  .logo-marca img {
+    height: 35px;
+  }
+  
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .iconos {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+  }
+  .iconos a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .fondo-register {
+    background: linear-gradient(135deg, #ebab9b, #f6c19e);
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+  }
+  
+  
+  .header-texto {
+    height: 116px; /* base 100px + 1/16 extra */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .contenedor-form {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .fila-doble {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .fila-doble input {
+    width: 100%;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+  }
+  
+  .archivo-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    width: fit-content;
+    margin-bottom: 10px;
+  }
+  
+  .archivo-input input {
+    display: none;
+  }
+  
+  .boton-enviar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+  }
+  
+  .mensaje-exito {
+    display: none;
+    margin-top: 15px;
+    color: green;
+    font-weight: bold;
+  }
+  

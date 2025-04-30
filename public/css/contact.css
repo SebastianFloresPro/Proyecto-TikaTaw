@@ -1,0 +1,160 @@
+/* Reset y base */
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  header {
+    background-color: #ffffff;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .logo-marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 24px;
+  }
+  
+  .logo-marca img {
+    height: 35px;
+  }
+  
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .iconos {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+  }
+  
+  .iconos a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  /* CONTACTO */
+  .contacto-hero {
+    background: linear-gradient(135deg, #ebab9b, #f6c19e);
+    color: white;
+    text-align: center;
+    padding: 80px 20px 40px;
+  }
+  
+  
+  .contacto-hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  
+  .contacto-hero p {
+    font-size: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .formulario-contacto {
+    background-color: white;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  form input,
+  form textarea {
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+  }
+  
+  form input:focus,
+  form textarea:focus {
+    border-color: #eb7f5b;
+    outline: none;
+  }
+  
+  form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  button[type="submit"] {
+    background-color: #eb7f5b;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #d96a46;
+  }
+  
+  @keyframes aparecerSuave {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .mensaje-exito {
+    text-align: center;
+    font-size: 14px;
+    color: #4CAF50;
+    margin-top: 10px;
+    animation: aparecerSuave 0.5s ease;
+  }
+  .oculto {
+    display: none;
+  }
+  
+  
