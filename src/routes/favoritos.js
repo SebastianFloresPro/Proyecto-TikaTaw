@@ -17,9 +17,9 @@ router.get('/favoritos', (req, res) => {
 // Ruta para agregar favorito
 router.post('/favoritos/agregar', (req, res) => {
   const { gato } = req.body;
-  const usuario = 'UsuarioTest'; // Luego usar req.session.user.nombre
+  const usuario = req.session.user ? req.session.user.nombre : 'UsuarioTest'; // Usar el nombre del usuario autenticado
 
-  const sql = 'INSERT INTO Favoritos (Usuario, NombreGato) VALUES (?, ?)';
+  const sql = 'INSERT INTO Favoritos (Usuario, NombreGato) VALUES ($1, $2)';
   db.query(sql, [usuario, gato], (err, result) => {
     if (err) {
       console.error('Error al guardar favorito:', err);
@@ -31,15 +31,15 @@ router.post('/favoritos/agregar', (req, res) => {
 
 // Ruta para listar favoritos en formato JSON
 router.get('/favoritos/listar', (req, res) => {
-  const usuario = 'UsuarioTest'; // Luego usar req.session.user.nombre
+  const usuario = req.session.user ? req.session.user.nombre : 'UsuarioTest'; // Usar el nombre del usuario autenticado
 
-  const sql = 'SELECT * FROM Favoritos WHERE Usuario = ? ORDER BY FechaAgregado DESC';
+  const sql = 'SELECT * FROM Favoritos WHERE "Usuario" = $1 ORDER BY "FechaAgregado" DESC';
   db.query(sql, [usuario], (err, results) => {
     if (err) {
       console.error('Error al listar favoritos:', err);
       return res.status(500).json([]);
     }
-    res.json(results);
+    res.json(results.rows); // 'results.rows' es donde están los datos en PostgreSQL
   });
 });
 

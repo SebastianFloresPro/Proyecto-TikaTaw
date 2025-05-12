@@ -1,5 +1,5 @@
 import express from 'express';
-import db from '../public/data/db.js';
+import db from '../public/data/db.js'; // Asegúrate de que db.js esté configurado con pg (PostgreSQL)
 
 const router = express.Router();
 
@@ -13,11 +13,12 @@ router.get('/:id', (req, res) => {
         return res.redirect(`/perfil/${req.session.user.id}`);
     }
 
-    db.query('SELECT * FROM usuarios WHERE ID = ?', [id], (err, userResults) => {
+    // Consulta para usuarios
+    db.query('SELECT * FROM usuarios WHERE "ID" = $1', [id], (err, userResults) => { // Cambié el parámetro y la sintaxis para PostgreSQL
         if (err) return res.status(500).send('Error del servidor');
 
-        if (userResults.length > 0) {
-            const usuario = userResults[0];
+        if (userResults.rows.length > 0) { // Cambié 'userResults.length' por 'userResults.rows.length'
+            const usuario = userResults.rows[0];
             return res.send(`
             <!DOCTYPE html>
             <html>
@@ -42,11 +43,12 @@ router.get('/:id', (req, res) => {
             `);
         }
 
-        db.query('SELECT * FROM refugios WHERE IdRefugio = ?', [id], (err, refugioResults) => {
+        // Consulta para refugios
+        db.query('SELECT * FROM refugios WHERE "IdRefugio" = $1', [id], (err, refugioResults) => { // Cambié el parámetro y la sintaxis para PostgreSQL
             if (err) return res.status(500).send('Error del servidor');
 
-            if (refugioResults.length > 0) {
-                const refugio = refugioResults[0];
+            if (refugioResults.rows.length > 0) { // Cambié 'refugioResults.length' por 'refugioResults.rows.length'
+                const refugio = refugioResults.rows[0];
                 return res.send(`
                 <!DOCTYPE html>
                 <html>

@@ -1,5 +1,5 @@
 import express from 'express';
-import db from '../public/data/db.js';
+import db from '../public/data/db.js'; 
 
 const router = express.Router();
 
@@ -12,22 +12,23 @@ router.post('/', (req, res) => {
     }
 
     if (edad < 1 || edad > 120) {
-    return res.status(400).send('Edad inválida');
+        return res.status(400).send('Edad inválida');
     }
 
     if (!correo.includes('@') || !correo.includes('.')) {
-    return res.status(400).send('Correo inválido');
+        return res.status(400).send('Correo inválido');
     }
 
     // Verificar si la conexión está activa
-    if (db.state === 'disconnected') {
+    if (db._connected === false) { // Verifica si la conexión de PostgreSQL está activa
         db.connect(err => {
             if (err) return res.status(500).send('Error de base de datos');
         });
     }
 
-    const sql = 'INSERT INTO Usuarios SET ?';
-    const usuario = { nombre, edad, correo, telefono, password };
+    // Consulta SQL para insertar usuario
+    const sql = 'INSERT INTO usuarios("Nombre", "Edad", "Correo", "Telefono", "Password") VALUES($1, $2, $3, $4, $5)';
+    const usuario = [nombre, edad, correo, telefono, password]; // Los valores se pasan en el mismo orden que los marcadores $1, $2, ...
 
     db.query(sql, usuario, (err, result) => {
         if (err) {

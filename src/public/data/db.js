@@ -1,13 +1,16 @@
+import dotenv from 'dotenv';
+dotenv.config(); // Carga las variables del .env
+
 import { Client } from 'pg';
 
-// Configura la conexión directamente en el código
+// Configura la conexión a PostgreSQL usando las variables de entorno correctamente
 const client = new Client({
-  host: 'dpg-d0gs6ak9c44c73943lcg-a.oregon-postgres.render.com', // El host de tu base de datos en Render
-  user: 'tikitaw_db_user',  // Usuario de tu base de datos
-  password: 'D1Mw173Q5nJMKguEy14g1EE4qPLfrmQu', // La contraseña de tu base de datos
-  database: 'tikitaw_db',  // El nombre de tu base de datos
-  port: 5432,  // Puerto predeterminado de PostgreSQL
-  ssl: { rejectUnauthorized: false }, // Requiere esto para Render
+  host: process.env.DB_HOST || 'dpg-d0gs6ak9c44c73943lcg-a.oregon-postgres.render.com', // Reemplaza el valor por tu DB_HOST real si no está en el .env
+  user: process.env.DB_USER || 'tikitaw_db_user',
+  password: process.env.DB_PASSWORD || 'D1Mw173Q5nJMKguEy14g1EE4qPLfrmQu',
+  database: process.env.DB_NAME || 'tikitaw_db',
+  port: process.env.DB_PORT || 5432,
+  ssl: { rejectUnauthorized: false }, // Para conexiones seguras en Render
 });
 
 // Conecta al cliente de PostgreSQL

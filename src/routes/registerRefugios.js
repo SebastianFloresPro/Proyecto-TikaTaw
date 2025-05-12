@@ -25,9 +25,9 @@ router.post('/', subirForm, async (req, res) => {
 
     // Preparar la consulta SQL para insertar el refugio
     const sql = `INSERT INTO refugios (
-      Rubro, NombreContacto, NombreEstablecimiento, 
-      Telefono, Correo, Password
-    ) VALUES (?, ?, ?, ?, ?, ?)`;
+      "Rubro", "NombreContacto", "NombreEstablecimiento", 
+      "Telefono", "Correo", "Password"
+    ) VALUES ($1, $2, $3, $4, $5, $6)`;
 
     console.log('Datos recibidos:', {
       rubro,
