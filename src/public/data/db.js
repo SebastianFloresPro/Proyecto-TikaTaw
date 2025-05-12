@@ -1,30 +1,24 @@
 import dotenv from 'dotenv';
-dotenv.config(); // Carga las variables del archivo .env
+dotenv.config(); // Carga las variables del .env
 
-import { Client } from 'pg'; // Usamos 'pg' para PostgreSQL
+import { Client } from 'pg';
 
-// Verifica que las variables se estén leyendo correctamente
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-
-// Crea la conexión a la base de datos utilizando las variables de entorno
+// Configuración directa con las variables de entorno
 const client = new Client({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
-    ssl: {
-        rejectUnauthorized: false, // Desactiva la verificación de certificados SSL (útil para entornos como Render)
-    },
+  host: process.env.DB_HOST || 'dpg-d0gs6ak9c44c73943lcg-a.oregon-postgres.render.com',
+  user: process.env.DB_USER || 'tikitaw_db_user',
+  password: process.env.DB_PASSWORD || 'D1Mw173Q5nJMKguEy14g1EE4qPLfrmQu',
+  database: process.env.DB_NAME || 'tikitaw_db',
+  port: process.env.DB_PORT || 5432,
+  ssl: { rejectUnauthorized: false } // Para conexiones seguras
 });
 
-client.connect((err) => {
-    if (err) {
-        console.error('Error al conectar a la base de datos:', err);
-        return;
-    }
-    console.log('Conectado a la base de datos');
-});
+// Conectar a la base de datos
+client.connect()
+  .then(() => console.log('✅ PostgreSQL conectado'))
+  .catch(err => {
+    console.error('❌ Error de conexión:', err.message);
+    process.exit(1); // Termina el proceso si no puede conectar
+  });
 
 export default client;
