@@ -9,6 +9,9 @@ import registerRefugiosRoutes from './src/routes/registerRefugios.js';
 import loginRoutes from './src/routes/login.js';
 import perfilRoutes from './src/routes/perfil.js';
 import favoritoRoutes from './src/routes/favoritos.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
