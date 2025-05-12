@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Favoritos</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <h1>Gatos favoritos</h1>
+  <div id="lista-favoritos">
+    Cargando favoritos...
+  </div>
+
+  <script>
+    fetch('/favoritos/listar')
+      .then(res => res.json())
+      .then(data => {
+        const contenedor = document.getElementById('lista-favoritos');
+        contenedor.innerHTML = '';
+
+        if (data.length === 0) {
+          contenedor.innerHTML = '<p>No tienes favoritos aún.</p>';
+          return;
+        }
+
+        data.forEach(gato => {
+          const div = document.createElement('div');
+          div.innerHTML = `
+            <div class="gato-card">
+              <p>🐱 <strong>${gato.NombreGato}</strong></p>
+              <p>Agregado: ${new Date(gato.FechaAgregado).toLocaleString()}</p>
+            </div>
+            <hr>
+          `;
+          contenedor.appendChild(div);
+        });
+      })
+      .catch(err => {
+        document.getElementById('lista-favoritos').innerHTML = 'Error al cargar favoritos';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
