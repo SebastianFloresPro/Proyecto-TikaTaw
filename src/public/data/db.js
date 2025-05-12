@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config(); // Carga las variables de entorno desde .env
+dotenv.config(); // Carga las variables del archivo .env
 
 import { Client } from 'pg'; // Usamos 'pg' para PostgreSQL
 
@@ -7,7 +7,7 @@ import { Client } from 'pg'; // Usamos 'pg' para PostgreSQL
 console.log('DB_USER:', process.env.DB_USER);
 console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
 
-// Crea la conexión con PostgreSQL
+// Crea la conexión a la base de datos utilizando las variables de entorno
 const client = new Client({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
