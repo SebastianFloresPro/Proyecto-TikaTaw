@@ -1,21 +1,25 @@
 import dotenv from 'dotenv';
-dotenv.config(); // Esto carga las variables de entorno desde .env
+dotenv.config(); // Carga las variables de entorno desde .env
 
-import mysql2 from 'mysql2';
+import { Client } from 'pg'; // Usamos 'pg' para PostgreSQL
 
 // Verifica que las variables se estén leyendo correctamente
 console.log('DB_USER:', process.env.DB_USER);
 console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
 
-const conexion = mysql2.createConnection({
+// Crea la conexión con PostgreSQL
+const client = new Client({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT,
+    ssl: {
+        rejectUnauthorized: false, // Desactiva la verificación de certificados SSL (útil para entornos como Render)
+    },
 });
 
-conexion.connect((err) => {
+client.connect((err) => {
     if (err) {
         console.error('Error al conectar a la base de datos:', err);
         return;
@@ -23,4 +27,4 @@ conexion.connect((err) => {
     console.log('Conectado a la base de datos');
 });
 
-export default conexion;
+export default client;
