@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikaPaw</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo-marca">
+            <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                <img src="/img/Cats Grooming.png" alt="Logo">
+                TikaPaw
+            </a>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/refugios">Refugios</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+        <div class="iconos">
+            <a href="/usuarios/login" title="Iniciar sesión">
+                <i class="fa-regular fa-user"></i>
+            </a>
+            <a href="/busqueda" title="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+            <a href="/favoritos" title="Favoritos">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+        </div>
+    </header>
+
+    <h1>Registrar Nueva Mascota</h1>
+
+<body>
+    <h1>Registrar Nueva Mascota</h1>
+    <form id="registroMascotaForm" enctype="multipart/form-data">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+        
+        <label for="tamanio">Tamaño:</label>
+        <input type="text" id="tamanio" name="tamanio" required><br>
+        
+        <label for="especie">Especie:</label>
+        <input type="text" id="especie" name="especie" required><br>
+        
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" required><br>
+        
+        <label for="genero">Género:</label>
+        <input type="text" id="genero" name="genero" required><br>
+        
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required></textarea><br>
+        
+        <label for="foto">Imagen:</label>
+        <input type="file" id="foto" name="foto"><br>
+        
+        <button type="submit">Registrar Mascota</button>
+    </form>
+    
+    <script src="/js/registermascota.js"></script>
+</body>
+</html>
+</html>
+</body>
+</html>
