@@ -93,4 +93,33 @@ router.get('/api/auth/check', (req, res) => {
     }
 });
 
+router.get('/perfil/usuario', (req, res) => {
+    if (!req.session.userId || req.session.tipo !== 'usuario') {
+        return res.redirect('/usuarios/login');
+    }
+
+    res.sendFile(path.join(__dirname, '../views', 'perfilUsuario.html'));
+});
+
+// Obtener datos del usuario logueado (API para el frontend)
+router.get('/perfil/usuario/datos', (req, res) => {
+    if (!req.session.userId || req.session.tipo !== 'usuario') {
+        return res.status(401).json({ success: false, message: 'No autorizado' });
+    }
+
+    const sql = 'SELECT nombre, edad, correo, telefono FROM usuario WHERE idusuario = ?';
+    db.query(sql, [req.session.userId], (err, results) => {
+        if (err) {
+            console.error('Error al obtener datos del usuario:', err);
+            return res.status(500).json({ success: false, message: 'Error del servidor' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+        }
+
+        res.json({ success: true, data: results[0] });
+    });
+});
+
 module.exports = router;

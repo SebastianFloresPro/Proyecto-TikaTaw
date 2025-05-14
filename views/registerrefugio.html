@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro Establecimiento - TikaPaw</title>
+  <title>Registro Mascota - TikaPaw</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -35,69 +35,61 @@
     </div>
   </header>
   <section class="seccion-heroica">
-    <div class="izquierda-heroica">
-      <img src="/img/logo.png" alt="Gato decorativo">
-    </div>
-    <div class="derecha-heroica">
-      <div class="texto-heroico">REGISTRO ESTABLECIMIENTO</div>
-      <div class="breadcrumb">Home > Register Refugio</div>
-      <form id="register-refugio-form">
-        <div class="form-group">
-          <label for="rubro">Rubro del establecimiento:</label>
-          <input type="text" id="rubro" name="rubro" placeholder="Ej: Refugio, Veterinaria, etc." required />
-        </div>
-        <div class="form-group">
-          <label for="nombreencargado">Nombre de contacto:</label>
-          <input type="text" id="nombreencargado" name="nombreencargado" placeholder="Nombre de la persona a cargo" required />
-        </div>
-        <div class="form-group">
-          <label for="nombrecentro">Nombre del establecimiento:</label>
-          <input type="text" id="nombrecentro" name="nombrecentro" placeholder="Nombre del refugio o centro" required />
-        </div>
-        <div class="form-group">
-          <label for="telefono">Teléfono:</label>
-          <input type="text" id="telefono" name="telefono" placeholder="Número de contacto" required />
-        </div>
-        <div class="form-group">
-          <label for="correo">Correo electrónico:</label>
-          <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required />
-        </div>
-        <div class="form-group">
-          <label for="redes">Redes sociales:</label>
-          <input type="text" id="redes" name="redes" placeholder="@Instagram / Facebook / Web" />
-        </div>
-        <div class="form-group">
-          <label for="contrasena">Contraseña:</label>
-          <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa una contraseña" required />
-        </div>
-        <div class="form-group">
-          <label for="descripcion">Descripción del establecimiento:</label>
-          <textarea id="descripcion" name="descripcion" rows="4" placeholder="Breve descripción del lugar"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="logo">Foto logo (500x500):</label>
-          <input type="file" id="logo" name="logo" accept="image/*" />
-        </div>
-        <div class="form-group">
-          <label for="portada">Foto portada:</label>
-          <input type="file" id="portada" name="portada" accept="image/*" />
-        </div>
-        <div class="form-group">
-          <label for="infoadicional">Información adicional:</label>
-          <textarea id="infoadicional" name="infoadicional" rows="4" placeholder="Información adicional..."></textarea>
-        </div>
-        <div class="botones">
-          <button type="submit">Enviar</button>
-          <button type="button" onclick="window.location.href='/usuarios/register'">Registrar usuario</button>
-          <button type="button" onclick="window.location.href='/usuarios/login'">Ya tengo una cuenta</button>
-        </div>
-        <div id="exito" class="mensaje-exito">¡Formulario enviado con éxito!</div>
-      </form>
-    </div>
+   <form id="register-mascota-form" 
+      onsubmit="handleSubmit(event)" 
+      enctype="multipart/form-data" 
+      method="POST" 
+      action="/mascotas/register"> <!-- Asegúrate de poner la ruta correcta -->
+      
+  <div class="form-group">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Nombre de la mascota" required />
+  </div>
+
+  <div class="form-group">
+    <label for="tamanio">Tamaño:</label>
+    <input type="text" id="tamanio" name="tamanio" placeholder="Ej: pequeño, mediano, grande" required />
+  </div>
+
+  <div class="form-group">
+    <label for="especie">Especie:</label>
+    <input type="text" id="especie" name="especie" placeholder="Ej: gato, perro" required />
+  </div>
+
+  <div class="form-group">
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad" placeholder="Edad en años" required />
+  </div>
+
+  <div class="form-group">
+    <label for="genero">Género:</label>
+    <input type="text" id="genero" name="genero" placeholder="Ej: macho, hembra" required />
+  </div>
+
+  <div class="form-group">
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" name="descripcion" rows="4" placeholder="Breve descripción de la mascota" required></textarea>
+  </div>
+
+  <!-- CAMPO NUEVO: INPUT DE IMAGEN -->
+  <div class="form-group">
+    <label for="foto">Foto de la mascota:</label>
+    <input type="file" id="foto" name="foto" accept="image/*" required />
+  </div>
+
+  <div class="botones">
+    <button type="submit">Registrar Mascota</button>
+    <button type="button" onclick="window.location.href='/refugios/registerrefugio'">Registrar Refugio</button>
+    <button type="button" onclick="window.location.href='/usuarios/login'">Ya tengo una cuenta</button>
+  </div>
+
+  <div id="exito" class="mensaje-exito">¡Mascota registrada con éxito!</div>
+</form>
+
   </section>
   <footer>
     © 2025 TikaPaw - Todos los derechos reservados
   </footer>
-  <script src="/js/registerrefugio.js" defer></script>
+  <script src="/js/registermascota.js" defer></script>
 </body>
 </html>
