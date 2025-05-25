@@ -39,10 +39,7 @@ const refugiosRoutes = require('./routes/refugios');
 const app = express();
 const port = 3000;
 
-// Middlewares
 app.use(express.json());
-
-// Configuración seesion
 app.use(session({
     secret: 'mi-secreto',
     resave: false,

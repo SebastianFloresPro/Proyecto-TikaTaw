@@ -1,154 +1,9 @@
-<!--
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil del Refugio</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-    <header>
-        <div class="logo-marca">
-            <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
-                <img src="/img/Cats Grooming.png" alt="Logo">
-                TikaPaw
-            </a>
-        </div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/refugios">Refugios</a>
-            <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-        </nav>
-        <div class="iconos">
-            <a href="/usuarios/login" title="Iniciar sesión">
-                <i class="fa-regular fa-user"></i>
-            </a>
-            <a href="/busqueda" title="Buscar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </a>
-            <a href="/favoritos" title="Favoritos">
-                <i class="fa-regular fa-heart"></i>
-            </a>
-        </div>
-    </header>
-
-    <h1>Perfil del Refugio</h1>
-
-    <div class="perfil-container">
-        <img id="imagenPerfil" src="/img/default_profile.jpg" alt="Imagen del perfil del refugio" style="width: 250px; height: 250px; object-fit: cover; border-radius: 50%;">
-
-        
-        <p><strong>Nombre del Centro:</strong> <span id="nombrecentro"></span></p>
-        <p><strong>Encargado:</strong> <span id="nombreencargado"></span></p>
-        <p><strong>Correo:</strong> <span id="correo"></span></p>
-        <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
-        <p><strong>Redes Sociales:</strong> <span id="redesociales"></span></p>
-
-        <button id="logoutBtn" onclick="logout()">Cerrar sesión</button>
-    </div>
-    <h2>Agregar Nueva Mascota</h2>
-<div class="form-container">
-    <form id="formMascota">
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="tamanio">Tamaño:</label>
-            <select id="tamanio" name="tamanio" required>
-                <option value="">Seleccione...</option>
-                <option value="Pequeño">Pequeño</option>
-                <option value="Mediano">Mediano</option>
-                <option value="Grande">Grande</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="especie">Especie:</label>
-            <input type="text" id="especie" name="especie" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="edad">Edad (años):</label>
-            <input type="number" id="edad" name="edad" min="0" max="30" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="genero">Género:</label>
-            <select id="genero" name="genero" required>
-                <option value="">Seleccione...</option>
-                <option value="Macho">Macho</option>
-                <option value="Hembra">Hembra</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
-        </div>
-        
-        <div class="form-group">
-            <label for="imagen">Imagen:</label>
-            <input type="file" id="imagen" name="imagen" accept="image/*">
-        </div>
-        
-        <button type="submit">Agregar Mascota</button>
-    </form>
-</div>
-    <script>
-        // Cargar los datos del refugio si el usuario está autenticado
-        fetch('/refugios/api/perfil', { credentials: 'include' })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    // Mostrar datos del refugio
-                    document.getElementById('nombrecentro').textContent = data.refugio.nombrecentro;
-                    document.getElementById('nombreencargado').textContent = data.refugio.nombreencargado;
-                    document.getElementById('correo').textContent = data.refugio.correo;
-                    document.getElementById('telefono').textContent = data.refugio.telefono;
-                    document.getElementById('redesociales').textContent = data.refugio.redesociales;
-                } else {
-                    // Si no está autenticado, redirigir al login
-                    alert(data.message || 'Debes iniciar sesión');
-                    window.location.href = '/usuarios/login'; // Redirigir a login
-                }
-            })
-            .catch(() => {
-                alert('Hubo un error al cargar el perfil');
-                window.location.href = '/usuarios/login'; // Redirigir al login
-            });
-
-        // Función de logout
-        function logout() {
-            fetch('/usuarios/logout', { method: 'POST', credentials: 'include' })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        // Redirigir a la página de login después de cerrar sesión
-                        window.location.href = '/usuarios/login';
-                    } else {
-                        alert('Error al cerrar sesión');
-                    }
-                })
-                .catch(() => {
-                    alert('Hubo un problema al cerrar sesión');
-                });
-        }
-    </script>
-</body>
-</html>
--->
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikaPaw</title>
+    <title>TikaPaw - Perfil del Refugio</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -180,110 +35,125 @@
         </div>
     </header>
 
-  <h1>Perfil del Refugio</h1>
+    <!-- Sección heroica para el perfil del refugio -->
+    <section class="seccion-heroica">
+        <div class="derecha-heroica">
+            <div class="breadcrumb">🏠 <span>Perfil del Refugio</span></div>
+            <h1 class="titulo-refugio">Tu Refugio en TikaPaw</h1>
+            <p class="texto-heroico">Gestiona tu refugio y encuentra hogares para tus patitas.</p>
+        </div>
+    </section>
 
-<!-- Imagen de perfil del refugio -->
-<div class="perfil-container">
-    <img id="imagenPerfil" src="/img/Cats Grooming.png" alt="Imagen del perfil del refugio" style="width: 250px; height: 250px; object-fit: cover; border-radius: 50%;">
+    <!-- Contenedor de información del refugio -->
+    <section class="seccion-informativa">
+        <div class="bloque">
+            <h2><i class="fa-solid fa-shield-cat"></i> Detalles del Refugio</h2>
+            <div class="perfil-container">
+                <img id="imagenPerfil" src="/img/Cats Grooming.png" alt="Imagen del perfil del refugio" style="width: 250px; height: 250px; object-fit: cover; border-radius: 50%;">
+                <div>
+                    <p><strong>Nombre del Centro:</strong> <span id="nombrecentro"></span></p>
+                    <p><strong>Encargado:</strong> <span id="nombreencargado"></span></p>
+                    <p><strong>Correo:</strong> <span id="correo"></span></p>
+                    <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
+                    <p><strong>Redes Sociales:</strong> <span id="redesociales"></span></p>
+                </div>
+                <div class="botones">
+                    <button id="addMascotaBtn" class="boton-heroico" onclick="window.location.href='/refugios/registermascota'">Agregar Nueva Mascota</button>
+                    <button id="logoutBtn" class="boton-heroico" onclick="logout()">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Datos del refugio -->
-    <p><strong>Nombre del Centro:</strong> <span id="nombrecentro"></span></p>
-    <p><strong>Encargado:</strong> <span id="nombreencargado"></span></p>
-    <p><strong>Correo:</strong> <span id="correo"></span></p>
-    <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
-    <p><strong>Redes Sociales:</strong> <span id="redesociales"></span></p>
+    <!-- Sección de mascotas registradas -->
+    <section class="galeria-gatos">
+        <h2 class="titulo-refugio">Mascotas Registradas 🐾</h2>
+        <div id="mascotasRegistradas" class="contenedor-gatos"></div>
+    </section>
 
+    <footer>
+        © 2025 TikaPaw - Todos los derechos reservados
+    </footer>
 
-    <button id="addMascotaBtn" onclick="window.location.href='/refugios/registermascota'">Agregar Nueva Mascota</button>
-    
-    <button id="logoutBtn" onclick="logout()">Cerrar sesión</button>
-</div>
-
-<!-- Mascotas Registradas -->
-<h2>Mascotas Registradas:</h2>
-<div id="mascotasRegistradas" class="mascotas-list">
-    
-</div>
-
-<script>
-    // Cargar los datos del refugio si el usuario está autenticado
-    fetch('/refugios/api/perfil', { credentials: 'include' })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                // Mostrar datos del refugio
-                document.getElementById('nombrecentro').textContent = data.refugio.nombrecentro;
-                document.getElementById('nombreencargado').textContent = data.refugio.nombreencargado;
-                document.getElementById('correo').textContent = data.refugio.correo;
-                document.getElementById('telefono').textContent = data.refugio.telefono;
-                document.getElementById('redesociales').textContent = data.refugio.redesociales;
-            } else {
-                // Si no esta autenticado, redirigir al login
-                alert(data.message || 'Debes iniciar sesión');
-                window.location.href = '/usuarios/login'; // Redirigir a login
-            }
-        })
-        .catch(() => {
-            alert('Hubo un error al cargar el perfil');
-            window.location.href = '/usuarios/login'; // Redirigir a login
-        });
-
-    // Cargar mascotas registradas
-    fetch('/refugios/mascotas/' + getUserCenterId(), { credentials: 'include' })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                const mascotasList = data.mascotas;
-                const mascotasContainer = document.getElementById('mascotasRegistradas');
-
-                if (mascotasList.length > 0) {
-                    mascotasList.forEach(mascota => {
-                        const mascotaElement = document.createElement('div');
-                        mascotaElement.classList.add('mascota');
-                        mascotaElement.innerHTML = `
-                            <h3>${mascota.nombre}</h3>
-                            <p><strong>Tamaño:</strong> ${mascota.tamanio}</p>
-                            <p><strong>Especie:</strong> ${mascota.especie}</p>
-                            <p><strong>Edad:</strong> ${mascota.edad} años</p>
-                            <p><strong>Género:</strong> ${mascota.genero}</p>
-                            <p><strong>Descripción:</strong> ${mascota.descripcion}</p>
-                        `;
-                        mascotasContainer.appendChild(mascotaElement);
-                    });
-                } else {
-                    mascotasContainer.innerHTML = '<p>No has registrado ninguna mascota aún.</p>';
-                }
-            } else {
-                alert('Error al cargar las mascotas');
-            }
-        })
-        .catch(() => {
-            const mascotasContainer = document.getElementById('mascotasRegistradas');
-            mascotasContainer.innerHTML = '<p>No has registrado ninguna mascota aún.</p>';
-        });
-
-    // Funcion de logout
-    function logout() {
-        fetch('/usuarios/logout', { method: 'POST', credentials: 'include' })
+    <script>
+        // Cargar los datos del refugio si el usuario está autenticado
+        fetch('/refugios/api/perfil', { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    // Redirigir a la página de login después de cerrar sesión
-                    window.location.href = '/usuarios/login';
+                    // Mostrar datos del refugio
+                    document.getElementById('nombrecentro').textContent = data.refugio.nombrecentro;
+                    document.getElementById('nombreencargado').textContent = data.refugio.nombreencargado;
+                    document.getElementById('correo').textContent = data.refugio.correo;
+                    document.getElementById('telefono').textContent = data.refugio.telefono;
+                    document.getElementById('redesociales').textContent = data.refugio.redesociales;
                 } else {
-                    alert('Error al cerrar sesión');
+                    alert(data.message || 'Debes iniciar sesión');
+                    window.location.href = '/usuarios/login';
                 }
             })
             .catch(() => {
-                alert('Hubo un problema al cerrar sesión');
+                alert('Hubo un error al cargar el perfil');
+                window.location.href = '/usuarios/login';
             });
-    }
 
-    // Obtener ID del centro desde la sesión
-    function getUserCenterId() {
-        const centerId = localStorage.getItem('userCenterId'); 
-        return centerId || ''; 
-    }
-</script>
+        // Cargar mascotas registradas
+        fetch('/refugios/mascotas/' + getUserCenterId(), { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const mascotasList = data.mascotas;
+                    const mascotasContainer = document.getElementById('mascotasRegistradas');
+
+                    if (mascotasList.length > 0) {
+                        mascotasList.forEach(mascota => {
+                            const mascotaElement = document.createElement('div');
+                            mascotaElement.classList.add('tarjeta-gato');
+                            mascotaElement.innerHTML = `
+                                <img src="/img/cat.jpeg" alt="${mascota.nombre}">
+                                <h3>${mascota.nombre}</h3>
+                                <p><strong>Tamaño:</strong> ${mascota.tamanio}</p>
+                                <p><strong>Especie:</strong> ${mascota.especie}</p>
+                                <p><strong>Edad:</strong> ${mascota.edad} años</p>
+                                <p><strong>Género:</strong> ${mascota.genero}</p>
+                                <p><strong>Descripción:</strong> ${mascota.descripcion}</p>
+                                <button class="boton-adoptar">Adoptar</button>
+                            `;
+                            mascotasContainer.appendChild(mascotaElement);
+                        });
+                    } else {
+                        mascotasContainer.innerHTML = '<p>No has registrado ninguna mascota aún.</p>';
+                    }
+                } else {
+                    alert('Error al cargar las mascotas');
+                }
+            })
+            .catch(() => {
+                const mascotasContainer = document.getElementById('mascotasRegistradas');
+                mascotasContainer.innerHTML = '<p>No has registrado ninguna mascota aún.</p>';
+            });
+
+        // Función de logout
+        function logout() {
+            fetch('/usuarios/logout', { method: 'POST', credentials: 'include' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '/usuarios/login';
+                    } else {
+                        alert('Error al cerrar sesión');
+                    }
+                })
+                .catch(() => {
+                    alert('Hubo un problema al cerrar sesión');
+                });
+        }
+
+        // Obtener ID del centro desde la sesión
+        function getUserCenterId() {
+            const centerId = localStorage.getItem('userCenterId');
+            return centerId || '';
+        }
+    </script>
 </body>
 </html>

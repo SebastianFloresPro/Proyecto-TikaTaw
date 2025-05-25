@@ -232,8 +232,7 @@ const path = require('path');
 const multer = require('multer');
 const db = require('../config/database');
 
-//cargado de imagenes , se guarda en ./uploads
-
+// Configuración de multer para subir imágenes
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'public/uploads/'),
     filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
@@ -250,14 +249,13 @@ router.post('/registerrefugio', (req, res) => {
     const { nombreencargado, nombrecentro, telefono, correo, redesociales, contrasena } = req.body;
     const adopcion = true;
 
-    // SQL para insertar refugio en la base de datos
     const sql = 'INSERT INTO centrosdeadopcion (nombrecentro, adopcion, nombreencargado, telefono, correo, contrasena, redesociales) VALUES (?, ?, ?, ?, ?, ?, ?)';
     db.query(sql, [nombrecentro, adopcion, nombreencargado, telefono, correo, contrasena || '123', redesociales], (err, result) => {
         if (err) {
             console.error('Error al registrar refugio:', err);
             return res.json({ success: false, message: 'Error al registrar refugio' });
         }
-        const newId = result.insertId; // ID generado por MySQL
+        const newId = result.insertId;
         res.json({ success: true, message: 'Refugio registrado exitosamente', idcentro: newId });
     });
 });
@@ -280,9 +278,8 @@ router.get('/refugios', (req, res) => {
 });
 
 router.get('/refugio', (req, res) => {
-  res.sendFile(path.join(__dirname, '../views/refugio.html'));
+    res.sendFile(path.join(__dirname, '../views/refugio.html'));
 });
-
 
 // Obtener mascotas por refugio
 router.get('/mascotas/:idcentro', (req, res) => {
@@ -301,7 +298,6 @@ router.get('/mascotas/:idcentro', (req, res) => {
 router.post('/login', (req, res) => {
     const { correo, password } = req.body;
 
-    // Buscar en tabla de refugios
     const sqlRefugio = 'SELECT idcentro, nombrecentro FROM centrosdeadopcion WHERE correo = ? AND contrasena = ?';
     db.query(sqlRefugio, [correo, password], (err, resultsRefugio) => {
         if (err) {
@@ -313,19 +309,19 @@ router.post('/login', (req, res) => {
             const refugio = resultsRefugio[0];
             req.session.userId = refugio.idcentro;
             req.session.tipo = 'refugio';
-            return res.json({ success: true, tipo: 'refugio' });  // Esto ya está bien
+            return res.json({ success: true, tipo: 'refugio' });
         }
 
         return res.json({ success: false, message: 'Correo o contraseña incorrectos' });
     });
 });
 
-// Ruta para ver el perfil de refugio, redirige si no estaa autenticado
+// Ruta para ver el perfil de refugio
 router.get('/perfil/refugio', (req, res) => {
     if (!req.session.userId || req.session.tipo !== 'refugio') {
-        return res.redirect('/usuarios/login'); 
+        return res.redirect('/usuarios/login');
     }
-    res.sendFile(path.join(__dirname, '../views', 'perfilRefugio.html')); 
+    res.sendFile(path.join(__dirname, '../views', 'perfilRefugio.html'));
 });
 
 // Obtener el perfil del refugio a través de una API (JSON)
@@ -353,15 +349,16 @@ router.post('/logout', (req, res) => {
         if (err) {
             return res.json({ success: false, message: 'Error al cerrar sesión' });
         }
-        res.clearCookie('connect.sid'); // Limpiar la cookie de sesionn
-        res.json({ success: true, message: 'Sesión cerrada exitosamente' }); 
+        res.clearCookie('connect.sid');
+        res.json({ success: true, message: 'Sesión cerrada exitosamente' });
     });
 });
 
-
+// Ruta para registrar mascotas
 router.post('/mascotas/register', upload.single('foto'), (req, res) => {
     const { nombre, tamanio, especie, edad, genero, descripcion, idcentro } = req.body;
-    const foto = req.file ? req.file.filename : null;
+    const foto = req.file ? `/uploads/${req.file.filename}` : null;
+
     console.log('Body:', req.body);
     console.log('File:', req.file);
 
@@ -369,14 +366,13 @@ router.post('/mascotas/register', upload.single('foto'), (req, res) => {
         return res.status(400).json({ success: false, message: 'Faltan campos requeridos' });
     }
 
-    // SQL sin promesas, con callback
     const sql = 'INSERT INTO mascota (nombre, tamanio, especie, edad, genero, descripcion, idcentro, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     db.query(sql, [nombre, tamanio, especie, edad, genero, descripcion, idcentro, foto], (err, result) => {
         if (err) {
             console.error('Error al registrar mascota:', err);
             return res.status(500).json({ success: false, message: 'Error interno del servidor' });
         }
-        res.json({ success: true });
+        res.json({ success: true, message: 'Mascota registrada con éxito' });
     });
 });
 
@@ -399,7 +395,7 @@ router.get('/mascotas', (req, res) => {
 
 router.get('/registermascota', (req, res) => {
     if (!req.session.userId || req.session.tipo !== 'refugio') {
-        return res.redirect('/usuarios/login'); // redirige si no estaa logueado
+        return res.redirect('/usuarios/login');
     }
     res.sendFile(path.join(__dirname, '../views/registermascota.html'));
 });
@@ -411,6 +407,5 @@ router.get('/api/auth/check', (req, res) => {
         res.json({ isValid: false });
     }
 });
-
 
 module.exports = router;
