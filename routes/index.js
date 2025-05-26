@@ -230,8 +230,8 @@ router.get('/busqueda/mascotas', (req, res) => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get('/rdf', (req, res) => {
-  const host = req.get('host');          // Ejemplo: localhost:3000 o tikapawdbp.onrender.com
-  const protocol = req.protocol;         // http o https
+  const host = req.get('host');         
+  const protocol = req.protocol;         
   const baseURL = `${protocol}://${host}`;
 
   const rdfXML = `<?xml version="1.0"?>
