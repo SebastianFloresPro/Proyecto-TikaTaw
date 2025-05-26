@@ -1,11 +1,12 @@
+/*
 const express = require('express');
 const router = express.Router();
 const path = require('path');
 const db = require('../config/database');
-const multer = require('multer');
 
 // Mostrar index
 router.get('/', (req, res) => {
+    console.log('Accediendo a la ruta /');
     res.sendFile(path.join(__dirname, '../views', 'index.html'));
 });
 
@@ -45,7 +46,7 @@ router.post('/mascotas/registermascota', (req, res) => {
             res.json({ success: false, message: 'Error al registrar mascota' });
             return;
         }
-        const newId = result.insertId; // ID generado por MySQL
+        const newId = result.insertId;
         res.json({ success: true, message: 'Mascota registrada exitosamente', idmascota: newId });
     });
 });
@@ -62,6 +63,212 @@ router.get('/mascotas', (req, res) => {
         res.json({ success: true, mascotas: results });
     });
 });
+// Buscar refugios
+router.get('/busqueda/refugios', (req, res) => {
+    console.log('Ruta /busqueda/refugios accedida');
+    const { nombre } = req.query;
+    console.log('Parámetro nombre:', nombre);
+    if (!nombre) {
+        console.log('Falta parámetro nombre');
+        return res.json({ success: false, message: 'Debe proporcionar un nombre para buscar' });
+    }
 
-// Exportar las rutas para que se usen en app.js
+    const sql = 'SELECT * FROM centrosdeadopcion WHERE nombrecentro LIKE ?';
+    const queryParam = `%${nombre}%`;
+    console.log('Consulta SQL (refugios):', sql, 'con parámetro:', queryParam);
+    db.query(sql, [queryParam], (err, results) => {
+        if (err) {
+            console.error('Error al buscar refugios:', err);
+            return res.json({ success: false, message: 'Error al buscar refugios: ' + err.message });
+        }
+        console.log('Resultados de refugios:', results);
+        res.json({ success: true, refugios: results });
+    });
+});
+
+// Buscar mascotas
+router.get('/busqueda/mascotas', (req, res) => {
+    console.log('Ruta /busqueda/mascotas accedida');
+    const { termino } = req.query;
+    console.log('Parámetro termino:', termino);
+    if (!termino) {
+        console.log('Falta parámetro termino');
+        return res.json({ success: false, message: 'Debe proporcionar un término para buscar' });
+    }
+
+    const sql = 'SELECT * FROM mascota WHERE nombre LIKE ? OR especie LIKE ?';
+    const queryParams = [`%${termino}%`, `%${termino}%`];
+    console.log('Consulta SQL (mascotas):', sql, 'con parámetros:', queryParams);
+    db.query(sql, queryParams, (err, results) => {
+        if (err) {
+            console.error('Error al buscar mascotas:', err);
+            return res.json({ success: false, message: 'Error al buscar mascotas: ' + err.message });
+        }
+        console.log('Resultados de mascotas:', results);
+        res.json({ success: true, mascotas: results });
+    });
+});
+
+// Mostrar página de detalles del refugio
+router.get('/refugios/refugio', (req, res) => {
+    console.log('Accediendo a la ruta /refugios/refugio');
+    res.sendFile(path.join(__dirname, '../views', 'refugio.html'));
+});
+
+// Obtener detalles de todos los refugios
+router.get('/refugios/refugios', (req, res) => {
+    console.log('Ruta /refugios/refugios accedida');
+    const sql = 'SELECT * FROM centrosdeadopcion';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error al obtener refugios:', err);
+            res.json({ success: false, message: 'Error al obtener refugios: ' + err.message });
+            return;
+        }
+        console.log('Resultados de refugios:', results);
+        res.json({ success: true, refugios: results });
+    });
+});
+
+// Obtener mascotas de un refugio específico
+router.get('/refugios/mascotas/:idcentro', (req, res) => {
+    console.log('Ruta /refugios/mascotas/:idcentro accedida');
+    const { idcentro } = req.params;
+    console.log('Parámetro idcentro:', idcentro);
+    const sql = 'SELECT * FROM mascota WHERE idcentro = ?';
+    db.query(sql, [idcentro], (err, results) => {
+        if (err) {
+            console.error('Error al obtener mascotas del refugio:', err);
+            res.json({ success: false, message: 'Error al obtener mascotas: ' + err.message });
+            return;
+        }
+        console.log('Resultados de mascotas:', results);
+        res.json({ success: true, mascotas: results });
+    });
+});
+
+module.exports = router;
+*/
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+const fs = require('fs');
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+const express = require('express');
+const router = express.Router();
+const path = require('path');
+const db = require('../config/database');
+
+
+// Rutas generales
+router.get('/', (req, res) => {
+    console.log('Accediendo a la ruta /');
+    res.sendFile(path.join(__dirname, '../views', 'index.html'));
+});
+
+router.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views', 'about.html'));
+});
+
+router.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views', 'contact.html'));
+});
+
+router.get('/busqueda', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views', 'busqueda.html'));
+});
+
+router.get('/favoritos', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views', 'favoritos.html'));
+});
+
+// Buscar refugios
+router.get('/busqueda/refugios', (req, res) => {
+    console.log('Ruta /busqueda/refugios accedida');
+    const { nombre } = req.query;
+    if (!nombre) {
+        console.log('Falta parámetro nombre');
+        return res.json({ success: false, message: 'Debe proporcionar un nombre para buscar' });
+    }
+
+    const sql = 'SELECT * FROM centrosdeadopcion WHERE nombrecentro LIKE ?';
+    const queryParam = `%${nombre}%`;
+    console.log('Consulta SQL (refugios):', sql, 'con parámetro:', queryParam);
+    db.query(sql, [queryParam], (err, results) => {
+        if (err) {
+            console.error('Error al buscar refugios:', err);
+            return res.json({ success: false, message: 'Error al buscar refugios: ' + err.message });
+        }
+        console.log('Resultados de refugios:', results);
+        res.json({ success: true, refugios: results });
+    });
+});
+
+// Buscar mascotas
+router.get('/busqueda/mascotas', (req, res) => {
+    console.log('Ruta /busqueda/mascotas accedida');
+    const { termino } = req.query;
+    if (!termino) {
+        console.log('Falta parámetro termino');
+        return res.json({ success: false, message: 'Debe proporcionar un término para buscar' });
+    }
+
+    const sql = 'SELECT * FROM mascota WHERE nombre LIKE ? OR especie LIKE ?';
+    const queryParams = [`%${termino}%`, `%${termino}%`];
+    console.log('Consulta SQL (mascotas):', sql, 'con parámetros:', queryParams);
+    db.query(sql, queryParams, (err, results) => {
+        if (err) {
+            console.error('Error al buscar mascotas:', err);
+            return res.json({ success: false, message: 'Error al buscar mascotas: ' + err.message });
+        }
+        console.log('Resultados de mascotas:', results);
+        res.json({ success: true, mascotas: results });
+    });
+});
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.get('/rdf', (req, res) => {
+  const host = req.get('host');          // Ejemplo: localhost:3000 o tikapawdbp.onrender.com
+  const protocol = req.protocol;         // http o https
+  const baseURL = `${protocol}://${host}`;
+
+  const rdfXML = `<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="${baseURL}/rdf#">
+
+  <rdf:Description rdf:about="${baseURL}/usuario/juanperez">
+    <tiki:solicitaAdoptar rdf:resource="${baseURL}/mascota/luna"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="${baseURL}/mascota/luna">
+    <tiki:perteneceA rdf:resource="${baseURL}/refugio/mascota"/>
+    <tiki:solicitaDisponibilidad rdf:resource="${baseURL}/refugio/mascota"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="${baseURL}/mascota/dafne">
+    <tiki:solicitaDisponibilidad rdf:resource="${baseURL}/refugio/mascota"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="${baseURL}/refugio/arequipa-shelter1">
+    <tiki:refugio rdf:resource="${baseURL}/refugio/arequipa-shelter1/info"/>
+  </rdf:Description>
+
+  <!-- Enlaces generales -->
+  <rdf:Description rdf:about="${baseURL}/index">
+    <tiki:enlaceAdoptar rdf:resource="${baseURL}/adoptar"/>
+    <tiki:enlaceAbout rdf:resource="${baseURL}/about"/>
+    <tiki:enlaceBuscador rdf:resource="${baseURL}/buscador"/>
+    <tiki:enlaceContactarnos rdf:resource="${baseURL}/contactarnos"/>
+    <tiki:enlaceLogin rdf:resource="${baseURL}/login"/>
+  </rdf:Description>
+
+</rdf:RDF>`;
+
+  res.type('application/rdf+xml');
+  res.send(rdfXML);
+});
+
+
 module.exports = router;

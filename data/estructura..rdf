@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="http://tikapawdbp.onrender.com/rdf#">
+
+  <rdf:Description rdf:about="http://tikapawdbp.onrender.com/usuario/juanperez">
+    <tiki:solicitaAdoptar rdf:resource="http://tikapawdbp.onrender.com/mascota/luna"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://tikapawdbp.onrender.com/mascota/luna">
+    <tiki:perteneceA rdf:resource="http://tikapawdbp.onrender.com/refugio/mascota"/>
+    <tiki:solicitaDisponibilidad rdf:resource="http://tikapawdbp.onrender.com/refugio/mascota"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://tikapawdbp.onrender.com/mascota/dafne">
+    <tiki:solicitaDisponibilidad rdf:resource="http://tikapawdbp.onrender.com/refugio/mascota"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://tikapawdbp.onrender.com/refugio/arequipa-shelter1">
+    <tiki:refugio rdf:resource="http://tikapawdbp.onrender.com/refugio/arequipa-shelter1/info"/>
+  </rdf:Description>
+
+  <!-- Enlaces generales -->
+  <rdf:Description rdf:about="http://tikapawdbp.onrender.com/index">
+    <tiki:enlaceAdoptar rdf:resource="http://tikapawdbp.onrender.com/adoptar"/>
+    <tiki:enlaceAbout rdf:resource="http://tikapawdbp.onrender.com/about"/>
+    <tiki:enlaceBuscador rdf:resource="http://tikapawdbp.onrender.com/buscador"/>
+    <tiki:enlaceContactarnos rdf:resource="http://tikapawdbp.onrender.com/contactarnos"/>
+    <tiki:enlaceLogin rdf:resource="http://tikapawdbp.onrender.com/login"/>
+  </rdf:Description>
+
+</rdf:RDF>
