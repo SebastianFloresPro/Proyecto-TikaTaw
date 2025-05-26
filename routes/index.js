@@ -228,34 +228,16 @@ router.get('/busqueda/mascotas', (req, res) => {
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get('/rdf', (req, res) => {
-  const host = req.get('host');         
+  const host = req.get('host');          
   const protocol = req.protocol;         
   const baseURL = `${protocol}://${host}`;
 
   const rdfXML = `<?xml version="1.0"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:tiki="${baseURL}/rdf#">
+ 
 
-  <rdf:Description rdf:about="${baseURL}/usuario/juanperez">
-    <tiki:solicitaAdoptar rdf:resource="${baseURL}/mascota/luna"/>
-  </rdf:Description>
-
-  <rdf:Description rdf:about="${baseURL}/mascota/luna">
-    <tiki:perteneceA rdf:resource="${baseURL}/refugio/mascota"/>
-    <tiki:solicitaDisponibilidad rdf:resource="${baseURL}/refugio/mascota"/>
-  </rdf:Description>
-
-  <rdf:Description rdf:about="${baseURL}/mascota/dafne">
-    <tiki:solicitaDisponibilidad rdf:resource="${baseURL}/refugio/mascota"/>
-  </rdf:Description>
-
-  <rdf:Description rdf:about="${baseURL}/refugio/arequipa-shelter1">
-    <tiki:refugio rdf:resource="${baseURL}/refugio/arequipa-shelter1/info"/>
-  </rdf:Description>
-
-  <!-- Enlaces generales -->
   <rdf:Description rdf:about="${baseURL}/index">
     <tiki:enlaceAdoptar rdf:resource="${baseURL}/adoptar"/>
     <tiki:enlaceAbout rdf:resource="${baseURL}/about"/>
@@ -270,5 +252,67 @@ router.get('/rdf', (req, res) => {
   res.send(rdfXML);
 });
 
+
+
+router.get('/rdf/datos', (req, res) => {
+    const host = req.get('host');
+    const protocol = req.protocol;
+    const baseURL = `${protocol}://${host}`;
+
+    let rdfXML = `<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="${baseURL}/rdf#">\n`;
+
+    // Consulta refugios
+    const refugioSQL = 'SELECT * FROM centrosdeadopcion';
+    db.query(refugioSQL, (err, refugios) => {
+        if (err) {
+            console.error('Error al consultar refugios:', err);
+            return res.status(500).send('Error interno');
+        }
+
+        // Consulta mascotas
+        const mascotaSQL = 'SELECT * FROM mascota';
+        db.query(mascotaSQL, (err, mascotas) => {
+            if (err) {
+                console.error('Error al consultar mascotas:', err);
+                return res.status(500).send('Error interno');
+            }
+
+            
+            for (let refugio of refugios) {
+                const urlRefugio = `${baseURL}/refugio/${refugio.idcentro}`;
+                rdfXML += `
+  <rdf:Description rdf:about="${urlRefugio}">
+    <tiki:nombreCentro>${refugio.nombrecentro}</tiki:nombreCentro>
+    <tiki:direccion>${refugio.direccion}</tiki:direccion>
+    <tiki:correo>${refugio.correo}</tiki:correo>
+    <tiki:telefono>${refugio.telefono}</tiki:telefono>
+  </rdf:Description>`;
+            }
+
+            
+            for (let mascota of mascotas) {
+                const urlMascota = `${baseURL}/mascota/${mascota.idmascota}`;
+                const urlRefugioMascota = `${baseURL}/refugio/${mascota.idrefugio}`;
+                rdfXML += `
+  <rdf:Description rdf:about="${urlMascota}">
+    <tiki:nombre>${mascota.nombre}</tiki:nombre>
+    <tiki:especie>${mascota.especie}</tiki:especie>
+    <tiki:edad>${mascota.edad}</tiki:edad>
+    <tiki:refugio rdf:resource="${urlRefugioMascota}"/>
+  </rdf:Description>`;
+            }
+
+            rdfXML += '\n</rdf:RDF>';
+            res.type('application/rdf+xml');
+            res.send(rdfXML);
+        });
+    });
+});
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = router;
