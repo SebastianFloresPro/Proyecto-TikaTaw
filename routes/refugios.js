@@ -408,4 +408,83 @@ router.get('/api/auth/check', (req, res) => {
     }
 });
 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+router.get('/rdf', (req, res) => {
+  const baseURL = `${req.protocol}://${req.get('host')}`;
+  const refugioSQL = 'SELECT * FROM centrosdeadopcion';
+
+  db.query(refugioSQL, (err, refugios) => {
+    if (err) {
+      console.error('Error:', err);
+      return res.status(500).send('Error interno');
+    }
+
+    let rdf = `<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="${baseURL}/rdf#">`;
+
+    for (let r of refugios) {
+      const url = `${baseURL}/refugio/${r.idcentro}`;
+      rdf += `
+  <rdf:Description rdf:about="${url}">
+    <tiki:nombre>${r.nombrecentro}</tiki:nombre>
+    <tiki:direccion>${r.direccion}</tiki:direccion>
+    <tiki:correo>${r.correo}</tiki:correo>
+    <tiki:telefono>${r.telefono}</tiki:telefono>
+  </rdf:Description>`;
+    }
+
+    rdf += '\n</rdf:RDF>';
+    res.type('application/rdf+xml');
+    res.send(rdf);
+  });
+});
+
+
+
+router.get('/registerrefugio/rdf', (req, res) => {
+  const baseURL = `${req.protocol}://${req.get('host')}`;
+
+  const rdf = `<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="${baseURL}/rdf#">
+
+  <rdf:Description rdf:about="${baseURL}/about">
+    <tiki:descripcion>Conoce quiénes somos, nuestra misión y visión.</tiki:descripcion>
+    <tiki:enlacePrincipal rdf:resource="${baseURL}"/>
+  </rdf:Description>
+
+</rdf:RDF>`;
+
+  res.type('application/rdf+xml');
+  res.send(rdf);
+});
+
+
+
+
+router.get('/registerrefugio/rdf', (req, res) => {
+  const baseURL = `${req.protocol}://${req.get('host')}`;
+
+  const rdf = `<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="${baseURL}/rdf#">
+
+  <rdf:Description rdf:about="${baseURL}/refugios/registerrefugio">
+    <tiki:descripcion>Registra un nuevo centro de adopción.</tiki:descripcion>
+    <tiki:yaTengoCuenta rdf:resource="${baseURL}/usuarios/login"/>
+  </rdf:Description>
+
+</rdf:RDF>`;
+
+  res.type('application/rdf+xml');
+  res.send(rdf);
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = router;

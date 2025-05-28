@@ -332,4 +332,43 @@ router.get('/perfil/usuario/datos', (req, res) => {
     });
 });
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.get('/login/rdf', (req, res) => {
+  const baseURL = `${req.protocol}://${req.get('host')}`;
+
+  const rdf = `<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="${baseURL}/rdf#">
+
+  <rdf:Description rdf:about="${baseURL}/usuarios/login">
+    <tiki:descripcion>Accede a tu cuenta o regístrate.</tiki:descripcion>
+    <tiki:enlaceRegistrar rdf:resource="${baseURL}/usuarios/register"/>
+    <tiki:yaTengoCuenta rdf:resource="${baseURL}/usuarios/login"/>
+  </rdf:Description>
+
+</rdf:RDF>`;
+
+  res.type('application/rdf+xml');
+  res.send(rdf);
+});
+
+router.get('/register/rdf', (req, res) => {
+  const baseURL = `${req.protocol}://${req.get('host')}`;
+
+  const rdf = `<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="${baseURL}/rdf#">
+
+  <rdf:Description rdf:about="${baseURL}/usuarios/register">
+    <tiki:descripcion>Formulario para crear una cuenta de usuario.</tiki:descripcion>
+    <tiki:yaTengoCuenta rdf:resource="${baseURL}/usuarios/login"/>
+  </rdf:Description>
+
+</rdf:RDF>`;
+
+  res.type('application/rdf+xml');
+  res.send(rdf);
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = router;

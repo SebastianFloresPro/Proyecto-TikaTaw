@@ -228,6 +228,9 @@ router.get('/busqueda/mascotas', (req, res) => {
 
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 router.get('/rdf', (req, res) => {
   const host = req.get('host');          
   const protocol = req.protocol;         
@@ -252,67 +255,51 @@ router.get('/rdf', (req, res) => {
   res.send(rdfXML);
 });
 
+//About
+router.get('/about/rdf', (req, res) => {
+  const baseURL = `${req.protocol}://${req.get('host')}`;
 
-
-router.get('/rdf/datos', (req, res) => {
-    const host = req.get('host');
-    const protocol = req.protocol;
-    const baseURL = `${protocol}://${host}`;
-
-    let rdfXML = `<?xml version="1.0"?>
+  const rdf = `<?xml version="1.0"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:tiki="${baseURL}/rdf#">\n`;
+         xmlns:tiki="${baseURL}/rdf#">
 
-    // Consulta refugios
-    const refugioSQL = 'SELECT * FROM centrosdeadopcion';
-    db.query(refugioSQL, (err, refugios) => {
-        if (err) {
-            console.error('Error al consultar refugios:', err);
-            return res.status(500).send('Error interno');
-        }
+  <rdf:Description rdf:about="${baseURL}/about">
+    <tiki:descripcion>Conoce quiénes somos, nuestra misión y visión.</tiki:descripcion>
+    <tiki:enlacePrincipal rdf:resource="${baseURL}"/>
+  </rdf:Description>
 
-        // Consulta mascotas
-        const mascotaSQL = 'SELECT * FROM mascota';
-        db.query(mascotaSQL, (err, mascotas) => {
-            if (err) {
-                console.error('Error al consultar mascotas:', err);
-                return res.status(500).send('Error interno');
-            }
+</rdf:RDF>`;
 
-            
-            for (let refugio of refugios) {
-                const urlRefugio = `${baseURL}/refugio/${refugio.idcentro}`;
-                rdfXML += `
-  <rdf:Description rdf:about="${urlRefugio}">
-    <tiki:nombreCentro>${refugio.nombrecentro}</tiki:nombreCentro>
-    <tiki:direccion>${refugio.direccion}</tiki:direccion>
-    <tiki:correo>${refugio.correo}</tiki:correo>
-    <tiki:telefono>${refugio.telefono}</tiki:telefono>
-  </rdf:Description>`;
-            }
-
-            
-            for (let mascota of mascotas) {
-                const urlMascota = `${baseURL}/mascota/${mascota.idmascota}`;
-                const urlRefugioMascota = `${baseURL}/refugio/${mascota.idrefugio}`;
-                rdfXML += `
-  <rdf:Description rdf:about="${urlMascota}">
-    <tiki:nombre>${mascota.nombre}</tiki:nombre>
-    <tiki:especie>${mascota.especie}</tiki:especie>
-    <tiki:edad>${mascota.edad}</tiki:edad>
-    <tiki:refugio rdf:resource="${urlRefugioMascota}"/>
-  </rdf:Description>`;
-            }
-
-            rdfXML += '\n</rdf:RDF>';
-            res.type('application/rdf+xml');
-            res.send(rdfXML);
-        });
-    });
+  res.type('application/rdf+xml');
+  res.send(rdf);
 });
 
 
+//contact 
+
+router.get('/contact/rdf', (req, res) => {
+  const baseURL = `${req.protocol}://${req.get('host')}`;
+
+  const rdf = `<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:tiki="${baseURL}/rdf#">
+
+  <rdf:Description rdf:about="${baseURL}/contact">
+    <tiki:descripcion>Contáctanos para dudas, adopciones o apoyo.</tiki:descripcion>
+    <tiki:enlacePrincipal rdf:resource="${baseURL}/"/>
+  </rdf:Description>
+
+</rdf:RDF>`;
+
+  res.type('application/rdf+xml');
+  res.send(rdf);
+});
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 module.exports = router;
