@@ -98,20 +98,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 */
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 🔍 Verifica inicioo de sesion
+    const BACKEND_URL = 'https://tikapawdbp.onrender.com'; 
     async function verificarSesion() {
         try {
-            // 1roo intenta verificar sesion de usuario
-            let response = await fetch('/usuarios/api/auth/check', { credentials: 'include' });
+            let response = await fetch(`${BACKEND_URL}/usuarios/api/auth/check`, {
+                credentials: 'include'
+            });
+
             let { isValid, tipo } = await response.json();
 
             if (isValid) return { isValid, tipo };
 
-            // Si no es usuario, intenta con refugio
-            response = await fetch('/refugios/api/auth/check', { credentials: 'include' });
+            response = await fetch(`${BACKEND_URL}/refugios/api/auth/check`, {
+                credentials: 'include'
+            });
+
             return await response.json();
-        } 
-        catch (error) {
+        } catch (error) {
             console.error('Error al verificar sesión:', error);
             return { isValid: false };
         }
@@ -125,19 +128,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (tipo === 'usuario' && !currentPath.startsWith('/usuarios/perfil')) {
             window.location.replace('/usuarios/perfil/usuario');
-        } 
-        else if (tipo === 'refugio' && !currentPath.startsWith('/refugios/perfil')) {
+        } else if (tipo === 'refugio' && !currentPath.startsWith('/refugios/perfil')) {
             window.location.replace('/refugios/perfil/refugio');
         }
-    } 
-    else {
+    } else {
         sessionStorage.removeItem('tipoUsuario');
         if (!currentPath.includes('/usuarios/login')) {
             window.location.replace('/usuarios/login');
         }
     }
 
-    //  formulario de login
     const formulario = document.querySelector('form');
     if (formulario) {
         formulario.addEventListener('submit', async (e) => {
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('/usuarios/login', {
+                const response = await fetch(`${BACKEND_URL}/usuarios/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ correo, password }),
@@ -159,18 +159,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (datos.success) {
                     sessionStorage.setItem('tipoUsuario', datos.tipo);
 
-                    // Redirigir según el tipo de usuario
                     window.location.replace(
                         datos.tipo === 'usuario'
                             ? '/usuarios/perfil/usuario'
                             : '/refugios/perfil/refugio'
                     );
-                }
-                 else {
+                } else {
                     alert('Error: ' + datos.message);
                 }
-            } 
-            catch (error) {
+            } catch (error) {
                 console.error('Error:', error);
                 alert('Hubo un problema con el inicio de sesión');
             }
