@@ -98,11 +98,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 */
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const BACKEND_URL = 'https://tikapawdbp.onrender.com'; 
+    const BACKEND_URL = process.env.BACKEND_URL || 'https://tikapawdbp.onrender.com'; 
+
     async function verificarSesion() {
         try {
             let response = await fetch(`${BACKEND_URL}/usuarios/api/auth/check`, {
-                credentials: 'include'
+                credentials: 'include' // Esto asegura que las cookies se envíen en cada solicitud
             });
 
             let { isValid, tipo } = await response.json();
@@ -151,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ correo, password }),
-                    credentials: 'include'
+                    credentials: 'include' // Esto asegura que las cookies se envíen en cada solicitud
                 });
 
                 const datos = await response.json();
