@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <img src="/img/cat.jpeg" alt="${mascota.nombre}">
                                     <h3>${mascota.nombre}</h3>
                                     <p>${mascota.edad} años • ${mascota.descripcion}</p>
-                                    <button class="boton-adoptar">adoptame</button>
-                                `;
+                                    <a href="/mascota.html?mascotaId=${mascota.idmascota}" class="boton-adoptar">Adóptame</a>
+                                    `;
                                 contenedorGatos.appendChild(tarjeta);
                             });
                         }

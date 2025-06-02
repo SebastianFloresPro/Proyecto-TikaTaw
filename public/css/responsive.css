@@ -2,6 +2,7 @@
     Responsive.css - Media Queries
 =================================== */
 
+/*
 @media (max-width: 768px) {
     .seccion-heroica {
         flex-direction: column;
@@ -31,5 +32,220 @@
 
     .barra-busqueda input {
         width: 100%;
+    }
+}
+    */
+
+    /* ================================
+    Responsive.css - Media Queries
+=================================== */
+
+/* Laptop (hasta 1200px)  */
+@media (max-width: 1200px) {
+    .seccion-heroica {
+        padding: 40px 10px;
+    }
+
+    .derecha-heroica .texto-heroico {
+        font-size: 1.1em;
+    }
+
+    .galeria-gatos .contenedor-gatos {
+        justify-content: center;
+    }
+
+    .tarjeta-gato {
+        width: 180px;
+    }
+}
+
+/* Tablet (hasta 768px) */
+@media (max-width: 768px) {
+    /* Header */
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .logo-marca {
+        margin-bottom: 15px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+
+    nav a {
+        margin: 10px 0;
+        font-size: 1em;
+    }
+
+    .iconos {
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .iconos a {
+        margin: 0 10px;
+    }
+
+    .buscador {
+        margin: 10px 0;
+    }
+
+    .busqueda-input {
+        width: 150px;
+    }
+
+    /* S. heorica */
+    .seccion-heroica {
+        flex-direction: column;
+        height: auto;
+        padding: 30px 10px;
+    }
+
+    .izquierda-heroica, .derecha-heroica {
+        flex: 100%;
+        max-width: 100%;
+    }
+
+    .derecha-heroica {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .texto-heroico {
+        font-size: 14px;
+    }
+
+    .boton-heroico {
+        margin: 10px 5px;
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    /* Galeria */
+    .contenedor-gatos, .contenedor-beneficios {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tarjeta-gato {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+
+    .beneficio {
+        margin-bottom: 20px;
+    }
+
+    /* Formularios */
+    .formulario-adopcion {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+        width: 100%;
+    }
+}
+
+/* Celular (hasta 600px)  */
+@media (max-width: 600px) {
+    /* Header */
+    .logo-marca img {
+        width: 40px;
+    }
+
+    nav a {
+        font-size: 0.9em;
+    }
+
+    .iconos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .iconos a {
+        margin: 5px 0;
+    }
+
+    .buscador {
+        width: 100%;
+    }
+
+    .busqueda-input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    /* S. Heroica */
+    .titulo-refugio {
+        font-size: 1.8em;
+    }
+
+    .texto-heroico {
+        font-size: 12px;
+    }
+
+    .breadcrumb {
+        font-size: 0.8em;
+    }
+
+    /* Galeria*/
+    .tarjeta-gato {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .beneficio {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Formularios */
+    .form-group label {
+        font-size: 0.9em;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .boton-heroico {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    /* Footer */
+    .footer-links a {
+        display: block;
+        margin: 5px 0;
+    }
+}
+
+/*  Pantallas muy pequeñas 400px*/
+@media (max-width: 400px) {
+    .titulo-refugio {
+        font-size: 1.5em;
+    }
+
+    .texto-heroico {
+        font-size: 10px;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+        font-size: 0.8em;
     }
 }
