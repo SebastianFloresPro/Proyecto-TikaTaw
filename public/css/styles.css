@@ -191,3 +191,129 @@
     display: block;
     color: red;
 }
+/*        GRAFOS                                           */
+
+.seccion-rdf {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.seccion-rdf h1 {
+    text-align: center;
+    color: #eb7f5b;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.seccion-rdf p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#fileInput {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+}
+
+#mynetwork {
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fafafa;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin: 30px auto;
+    width: 95%;
+}
+.mascota-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+    max-width: 300px;
+    display: inline-block;
+    vertical-align: top;
+}
+.mascota-card img {
+    max-width: 100%;
+    height: auto;
+}
+.bloque {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.contenedor-solicitudes {
+  display: flex;
+  flex-wrap: wrap;       /* Permite que las tarjetas bajen a la siguiente línea si no caben */
+  gap: 20px;             /* Espacio entre tarjetas */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  padding: 10px 0;
+}
+
+.solicitud-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 280px;          /* Tamaño fijo o relativo para que no sean gigantes */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.solicitud-card:hover {
+  transform: scale(1.05);
+}
+
+.solicitud img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.solicitud-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.solicitud-info h3 {
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.solicitud-info p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.btn-ver-detalles {
+  margin-top: 10px;
+  background-color: #2b7a78;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver-detalles:hover {
+  background-color: #3aafa9;
+}
+

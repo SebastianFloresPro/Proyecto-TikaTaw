@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             mensajeError.classList.add('visible');
             return;
         }
-
+        
         try {
             const petData = JSON.parse(responseText);
             console.log('Datos de la mascota parseados:', petData);

@@ -1,35 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/database');
-const path = require('path');
+//const db = require('../config/database');
+const { db } = require('../config/database');
 
-// Mostrar formulario de registro de usuarios
+const path = require('path');
+const bcrypt = require('bcrypt'); 
+
 router.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, '../views', 'register.html'));
 });
 
-// Procesar registro de usuarios
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     const { nombre, edad, correo, telefono, password } = req.body;
-    
-    const sql = 'INSERT INTO usuario (nombre, edad, correo, telefono, contrasena) VALUES (?, ?, ?, ?, ?)';
 
-    db.query(sql, [nombre, edad, correo, telefono, password], (err, result) => {
-        if (err) {
-            console.error('Error al registrar usuario:', err);
-            return res.json({ success: false, message: 'Error al registrar usuario' });
-        }
-        res.json({ success: true, message: 'Usuario registrado exitosamente' });
-    });
+    try {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const sql = 'INSERT INTO usuario (nombre, edad, correo, telefono, contrasena) VALUES (?, ?, ?, ?, ?)';
+        db.query(sql, [nombre, edad, correo, telefono, hashedPassword], (err, result) => {
+            if (err) {
+                console.error('Error al registrar usuario:', err);
+                return res.json({ success: false, message: 'Error al registrar usuario' });
+            }
+            res.json({ success: true, message: 'Usuario registrado exitosamente' });
+        });
+    } catch (error) {
+        console.error('Error al encriptar contraseña:', error);
+        res.json({ success: false, message: 'Error al procesar el registro' });
+    }
 });
 
-// Mostrar formulario de login
 router.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../views', 'login.html'));
 });
 
-// Procesar login para usuarios y refugios
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     if (req.session.userId) {
         return res.json({ success: true, tipo: req.session.tipo });
     }
@@ -37,8 +43,8 @@ router.post('/login', (req, res) => {
     const { correo, password } = req.body;
 
     // Buscar en tabla de usuarios
-    const sqlUsuario = 'SELECT idusuario, nombre FROM usuario WHERE correo = ? AND contrasena = ?';
-    db.query(sqlUsuario, [correo, password], (err, resultsUsuario) => {
+    const sqlUsuario = 'SELECT idusuario, nombre, contrasena FROM usuario WHERE correo = ?';
+    db.query(sqlUsuario, [correo], async (err, resultsUsuario) => {
         if (err) {
             console.error('Error al iniciar sesión (usuario):', err);
             return res.json({ success: false, message: 'Error del servidor' });
@@ -46,14 +52,17 @@ router.post('/login', (req, res) => {
 
         if (resultsUsuario.length > 0) {
             const usuario = resultsUsuario[0];
-            req.session.userId = usuario.idusuario;
-            req.session.tipo = 'usuario';
-            return res.json({ success: true, tipo: 'usuario' });
+            const match = await bcrypt.compare(password, usuario.contrasena);
+            if (match) {
+                req.session.userId = usuario.idusuario;
+                req.session.tipo = 'usuario';
+                return res.json({ success: true, tipo: 'usuario' });
+            }
         }
 
         // Buscar en tabla de refugios
-        const sqlRefugio = 'SELECT idcentro, nombrecentro FROM centrosdeadopcion WHERE correo = ? AND contrasena = ?';
-        db.query(sqlRefugio, [correo, password], (err, resultsRefugio) => {
+        const sqlRefugio = 'SELECT idcentro, nombrecentro, contrasena FROM centrosdeadopcion WHERE correo = ?';
+        db.query(sqlRefugio, [correo], async (err, resultsRefugio) => {
             if (err) {
                 console.error('Error al iniciar sesión (refugio):', err);
                 return res.json({ success: false, message: 'Error del servidor' });
@@ -61,9 +70,12 @@ router.post('/login', (req, res) => {
 
             if (resultsRefugio.length > 0) {
                 const refugio = resultsRefugio[0];
-                req.session.userId = refugio.idcentro;
-                req.session.tipo = 'refugio';
-                return res.json({ success: true, tipo: 'refugio' });
+                const match = await bcrypt.compare(password, refugio.contrasena);
+                if (match) {
+                    req.session.userId = refugio.idcentro;
+                    req.session.tipo = 'refugio';
+                    return res.json({ success: true, tipo: 'refugio' });
+                }
             }
 
             return res.json({ success: false, message: 'Correo o contraseña incorrectos' });
@@ -71,7 +83,6 @@ router.post('/login', (req, res) => {
     });
 });
 
-// Ruta para cerrar sesion aea
 router.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -82,16 +93,6 @@ router.post('/logout', (req, res) => {
     });
 });
 
-// Verificar sesion activa D:
-/*
-router.get('/api/auth/check', (req, res) => {
-    if (req.session.userId && req.session.tipo) {
-        res.json({ isValid: true, tipo: req.session.tipo });
-    } else {
-        res.json({ isValid: false });
-    }
-});
-*/
 router.get('/api/auth/check', (req, res) => {
     if (!req.session.userId || !req.session.tipo) {
         return res.json({ isValid: false });
@@ -107,7 +108,7 @@ router.get('/api/auth/check', (req, res) => {
             isValid: true,
             tipo: req.session.tipo,
             userId: user.idusuario,
-            username: user.nombre, 
+            username: user.nombre,
             edad: user.edad,
             correo: user.correo,
             telefono: user.telefono
@@ -122,7 +123,6 @@ router.get('/perfil/usuario', (req, res) => {
 
     res.sendFile(path.join(__dirname, '../views', 'perfilUsuario.html'));
 });
-
 
 router.get('/perfil/usuario/datos', (req, res) => {
     if (!req.session.userId || req.session.tipo !== 'usuario') {
@@ -143,9 +143,6 @@ router.get('/perfil/usuario/datos', (req, res) => {
         res.json({ success: true, data: results[0] });
     });
 });
-
-module.exports = router;
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get('/login/rdf', (req, res) => {
   const baseURL = `${req.protocol}://${req.get('host')}`;

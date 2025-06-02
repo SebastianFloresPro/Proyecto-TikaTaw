@@ -82,6 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             document.getElementById('refugio-nombre').textContent = refugio.nombrecentro;
                             document.getElementById('refugio-telefono').textContent = refugio.telefono;
                             document.getElementById('refugio-encargado').textContent = refugio.nombreencargado;
+          //rdf idcentro
+                            const rdfViewerLink = document.getElementById('rdf-viewer-link');
+                            const rdfDownloadLink = document.getElementById('rdf-download-link');
+                            const graphLink = document.getElementById('graph-link');
+                            if (rdfViewerLink && rdfDownloadLink && graphLink) {
+                                rdfViewerLink.href = `/mascotas/mascotas-rdf?view=html&idcentro=${idcentro}`;
+                                rdfDownloadLink.href = `/mascotas/mascotas-rdf?idcentro=${idcentro}`;
+                                graphLink.href = `/mascotas/mascotas-rdf?view=graph&idcentro=${idcentro}`;
+                            }
                         }
                     }
                 })

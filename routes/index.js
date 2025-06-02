@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const db = require('../config/database');
+//const db = require('../config/database');
+const { db } = require('../config/database');
 
 router.get('/', (req, res) => {
     console.log('Accediendo a la ruta /');
@@ -20,9 +21,7 @@ router.get('/busqueda', (req, res) => {
     res.sendFile(path.join(__dirname, '../views', 'busqueda.html'));
 });
 
-router.get('/favoritos', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views', 'favoritos.html'));
-});
+
 router.get('/mascota.html', (req, res) => {
     res.sendFile(path.join(__dirname, '../views', 'mascota.html'));
 });
@@ -80,18 +79,15 @@ router.get('/mascotas-public', (req, res) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 router.get('/rdf', (req, res) => {
-  const host = req.get('host');          
-  const protocol = req.protocol;         
+  const host = req.get('host');
+  const protocol = req.protocol;
   const baseURL = `${protocol}://${host}`;
+  const view = req.query.view;
 
   const rdfXML = `<?xml version="1.0"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:tiki="${baseURL}/rdf#">
- 
-
   <rdf:Description rdf:about="${baseURL}/index">
     <tiki:enlaceAdoptar rdf:resource="${baseURL}/adoptar"/>
     <tiki:enlaceAbout rdf:resource="${baseURL}/about"/>
@@ -99,55 +95,32 @@ router.get('/rdf', (req, res) => {
     <tiki:enlaceContactarnos rdf:resource="${baseURL}/contactarnos"/>
     <tiki:enlaceLogin rdf:resource="${baseURL}/login"/>
   </rdf:Description>
-
 </rdf:RDF>`;
 
-  res.type('application/rdf+xml');
-  res.send(rdfXML);
+  if (view === 'html') {
+    res.send(`
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <title>RDF de TikaPaw</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 20px; }
+          pre { background: #f4f4f4; padding: 10px; border: 1px solid #ccc; }
+        </style>
+      </head>
+      <body>
+        <h1>RDF de la página principal</h1>
+        <pre>${rdfXML.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+        <a href="/rdf">Descargar RDF</a>
+      </body>
+      </html>
+    `);
+  } else {
+    res.type('application/rdf+xml');
+    res.send(rdfXML);
+  }
 });
-
-//About
-router.get('/about/rdf', (req, res) => {
-  const baseURL = `${req.protocol}://${req.get('host')}`;
-
-  const rdf = `<?xml version="1.0"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:tiki="${baseURL}/rdf#">
-
-  <rdf:Description rdf:about="${baseURL}/about">
-    <tiki:descripcion>Conoce quiénes somos, nuestra misión y visión.</tiki:descripcion>
-    <tiki:enlacePrincipal rdf:resource="${baseURL}"/>
-  </rdf:Description>
-
-</rdf:RDF>`;
-
-  res.type('application/rdf+xml');
-  res.send(rdf);
-});
-
-
-//contact 
-
-router.get('/contact/rdf', (req, res) => {
-  const baseURL = `${req.protocol}://${req.get('host')}`;
-
-  const rdf = `<?xml version="1.0"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:tiki="${baseURL}/rdf#">
-
-  <rdf:Description rdf:about="${baseURL}/contact">
-    <tiki:descripcion>Contáctanos para dudas, adopciones o apoyo.</tiki:descripcion>
-    <tiki:enlacePrincipal rdf:resource="${baseURL}/"/>
-  </rdf:Description>
-
-</rdf:RDF>`;
-
-  res.type('application/rdf+xml');
-  res.send(rdf);
-});
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

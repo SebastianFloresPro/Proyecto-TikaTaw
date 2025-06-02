@@ -137,12 +137,13 @@ async function handleSubmit(event) {
         alert('Hubo un error al enviar el formulario. Por favor, intenta de nuevo.');
     }
 }
-    */document.addEventListener('DOMContentLoaded', () => {
+    */
+   document.addEventListener('DOMContentLoaded', () => {
     const selectRefugio = document.getElementById('idcentro');
     const exito = document.getElementById('exito');
     const error = document.getElementById('error');
 
-    // Verificar autenticación antes de cargar el formulario
+  
     fetch('/refugios/api/auth/check')
         .then(response => response.json())
         .then(data => {
@@ -153,7 +154,7 @@ async function handleSubmit(event) {
                 return;
             }
 
-            // Cargar refugios
+      
             fetch('/refugios/refugios')
                 .then(response => {
                     if (!response.ok) {
@@ -198,11 +199,9 @@ async function handleSubmit(event) {
     const exito = document.getElementById('exito');
     const error = document.getElementById('error');
 
-    // Ocultar mensajes previos
     exito.style.display = 'none';
     error.style.display = 'none';
 
-    // Validaciones
     const requiredFields = ['idcentro', 'nombre', 'tamanio', 'especie', 'edad', 'genero', 'descripcion'];
     for (let field of requiredFields) {
         if (!formData.get(field)) {

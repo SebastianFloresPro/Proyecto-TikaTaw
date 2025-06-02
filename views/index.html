@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <header>
   <div class="logo-marca">
     <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
@@ -34,9 +35,20 @@
       <input type="text" id="buscar-mascota" placeholder="Adopta una mascota..." class="busqueda-input">
       <i class="fa-solid fa-magnifying-glass" onclick="buscarMascota()"></i>
     </div>
-    <a href="/favoritos" title="Favoritos">
-      <i class="fa-regular fa-heart"></i>
-    </a>
+
+    <div style="position: relative; display: inline-block;">
+      <a href="#" id="toggle" title="Opciones" style="font-size: 20px; color: black; cursor: pointer;">
+        <i class="fa-solid fa-file-arrow-down"></i>
+      </a>
+
+      <div id="menu" style="display: none; position: absolute; background: white; border: 1px solid black; z-index: 10; right: 0; top: 30px;">
+       <div>
+        <a href="/rdf?view=html">Ver RDF</a> |
+        <a href="/rdf?view=graph">Descargar RDF</a>
+      </div>
+      <a href="/grafos.html" style="display: block; padding: 8px 12px; color: black; text-decoration: none;">grafos</a>
+      </div>
+    </div>
   </div>
 </header>
     <section class="seccion-heroica">
@@ -150,3 +162,4 @@ async function cargarMascotas() {
 </body>
 </html>
 <script src="/js/busqueda.js" defer></script>
+<script src="/js/BotonToggle.js"></script>
